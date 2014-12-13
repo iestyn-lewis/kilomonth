@@ -1,0 +1,78 @@
+@-webkit-viewport   { width: device-width; }
+@-moz-viewport      { width: device-width; }
+@-ms-viewport       { width: device-width; }
+@-o-viewport        { width: device-width; }
+@viewport           { width: device-width; }
+
+body {
+    text-align: center; 
+    /*font-family: "Silkscreen", sans-serif, clean;*/
+    font-family: 'Libre Baskerville', sans-serif, clean;
+}
+
+.notouch {
+    -ms-touch-action: none;
+    touch-action: none;
+}
+
+h1 {
+    font-size: 16pt;
+}
+
+.month-highlight {
+    border: solid 2px #ff0000;
+    z-index: 99;
+    position: absolute;
+    pointer-events: none;
+}
+
+.qt-bigfont {
+  font-size: 16px;
+  line-height: 120%;
+}
+
+.year-indicator {
+    z-index: 99;
+    position: absolute;
+}
+
+.age-indicator {
+    z-index: 99;
+    position: absolute;
+}
+
+.kilocanvas {
+    cursor: pointer;
+    /*border: 1px solid #000000;*/
+}
+
+#descEdit {
+    text-align: left!important;
+}
+
+.note-editable {
+    text-align: left;
+}
+
+#addModal .modal-dialog  {width:80%;}
+
+.thumb {
+    height: 75px;
+    border: 1px solid #000;
+    margin: 10px 5px 0 0;
+}
+
+.delete-image {
+  display: block;
+  float: right;
+  margin-left: 10px;
+  text-align: center;
+  vertical-align: top;
+  font-style: normal;
+  background-color: #eee;
+  color: #ff0000;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+

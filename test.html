@@ -1,0 +1,117 @@
+<!--
+To change this template use Tools | Templates.
+-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title></title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+   <!-- CDN items -->
+    <!-- style -->    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Libre+Baskerville' rel='stylesheet' type='text/css'>
+    <!-- js -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src='https://cdn.firebase.com/js/client/2.0.6/firebase.js'></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <!-- Optional theme -->
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"> -->
+    
+    <!-- icons -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/summernote.css">
+    <link rel="stylesheet" href="css/summernote-bs3.css">
+    
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/test.css">
+    <script src="js/storage/StorageImgur.js"></script>
+    <script src="js/storage/StorageFirebase.js"></script>
+    <script src="js/utils/ObjectUtils.js"></script>
+ </head>
+<body>
+
+<style>
+  .thumb {
+    height: 75px;
+    border: 1px solid #000;
+    margin: 10px 5px 0 0;
+  }
+</style>
+
+<input type="file" id="files" name="files[]" multiple />
+<output id="list"></output>
+<input type="submit" id="save" value="Upload to imgur" />
+
+<script>
+  function handleFileSelect(evt) {
+    var files = evt.target.files; // FileList object
+
+    // Loop through the FileList and render image files as thumbnails.
+    for (var i = 0, f; f = files[i]; i++) {
+
+      // Only process image files.
+      if (!f.type.match('image.*')) {
+        continue;
+      }
+
+      var reader = new FileReader();
+
+      // Closure to capture the file information.
+      reader.onload = (function(theFile) {
+        return function(e) {
+          // Render thumbnail.
+          var span = document.createElement('span');
+          span.innerHTML = ['<img class="thumb" src="', e.target.result,
+                            '" title="', escape(theFile.name), '"/>'].join('');
+          document.getElementById('list').insertBefore(span, null);
+        };
+      })(f);
+
+      // Read in the image file as a data URL.
+      reader.readAsDataURL(f);
+    }
+  }
+
+  document.getElementById('files').addEventListener('change', handleFileSelect, false);
+
+    function handleFiles(files) {
+         for (var i = 0, file; file = files[i]; i++) {   
+            var file = files[0];
+            var reader = new FileReader();
+            reader.onload = function(evt) {
+                var data = evt.target.result.split(',')[1];
+                StorageImgur.storeImage(data, function(url) {
+                    console.log(url);
+                });
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+  
+  $("#save").click(function() {
+      handleFiles($("#files").prop("files"));
+  });
+</script>
+
+<script>
+var km = {};
+        km.rootFirebaseUrl = 'https://dazzling-heat-4042.firebaseio.com/';
+        km.imgurClientId = 'c79b5ab16574e49';
+        km.imgurApiUrl = 'https://api.imgur.com/3/image';
+        km.googleAPIKey = 'AIzaSyAhFGKePG0tz0elL_1XaF1YR7ONU5tLu6A';
+        km.googleUrlShortenerUrl = 'https://www.googleapis.com/urlshortener/v1/url';
+        StorageFirebase.init();
+StorageFirebase.getUserFromEmail("abbfroggylewis@gmail.com", function(key, val) {
+    console.log(key);
+    console.log(val);
+});
+</script>
+
+
+</body>
+</html>

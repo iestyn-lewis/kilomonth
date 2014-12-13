@@ -1,0 +1,4 @@
+var Environment = {
+    name : "dev",
+    
+};

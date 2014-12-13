@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, user-scalable=no">
+    <!-- CDN items -->
+    <!-- style -->    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Libre+Baskerville' rel='stylesheet' type='text/css'>
+    <!-- js -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src='https://cdn.firebase.com/js/client/2.0.6/firebase.js'></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <!-- Local items -->
+    <!-- style -->
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/colorPicker.css">
+    <link rel="stylesheet" href="css/jquery.qtip.css">
+    <link rel="stylesheet" href="css/summernote.css">
+    <link rel="stylesheet" href="css/summernote-bs3.css">
+    <link rel="stylesheet" href="css/lightbox.css">
+    <!-- libraries -->
+    <script src="js/jquery.qtip.min.js"></script>
+    <script src="js/utils/date.js" type="text/javascript"></script>
+    <script src="js/utils/DateUtils.js" type="text/javascript"></script>
+    <script src="js/jquery.colorPicker.js"></script>
+    <script src="js/imagesloaded.pkgd.min.js"></script>
+    <script src="js/jquery.colorPicker.js"></script>
+    <script src="js/utils/CanvasUtils.js"></script>
+    <script src="js/utils/ObjectUtils.js"></script>
+    <script src="js/URI.js"></script>
+    <script src="js/summernote.min.js"></script>
+    <script src="js/lightbox.min.js"></script>
+    <!-- app -->
+    <script src="js/framework/Framework.js"></script>
+    <script src="js/storage/AuthenticateFirebase.js"></script>
+    <script src="js/storage/StorageFirebase.js"></script>
+    <script src="js/storage/ShortenURLGoogle.js"></script>
+    <script src="js/storage/StorageImgur.js"></script>
+    <script src="js/models/User.js"></script>
+    <script src="js/models/LifeMapData.js"></script>
+    <script src="js/models/Events.js"></script>
+    <script src="js/models/Event.js"></script>
+    <script src="js/models/MapSettings.js"></script>
+    <script src="js/models/Layers.js"></script>
+    <script src="js/views/ViewMap.js"></script>
+    <script src="js/views/ViewMapInfo.js"></script>
+    <script src="js/views/ViewEvents.js"></script>
+    <script src="js/views/ViewEvent.js"></script>
+    <script src="js/views/ViewLayers.js"></script>
+    <script src="js/views/ViewShare.js"></script>
+    <script src="js/renderers/BlockRenderer.js"></script>
+    <script src="js/renderers/ColumnRenderer.js"></script>
+    <script src="js/kilomonth.js"></script>
+    <title>Kilomonth - see your whole life</title>
+</head>
+<body class="notouch" onresize="resize_canvas();">
+    <div id="splash">
+        <h1>KILOMONTH</h1>
+        Your life.  All of it.
+        <p /><p />
+        <i class="fa fa-spin fa-spinner"></i> Loading, please wait...
+<!--
+        <button class="btn btn-default" data-toggle="modal" data-target="#welcomeModal"><i class="fa fa-asterisk"></i> <span id="startName">Start</span></button>
+-->
+    </div>
+
+
+       <div id="ui" style="display: none; margin: auto; position: relative;">
+       <br />
+       <div class="pull-left" style="margin-left: 20px">
+        <a href="/"><span style="font-size: 14pt;">KILOMONTH</span></a>&nbsp; &nbsp; &nbsp;
+            <!--<div class="btn-group" style="margin-top: 10px; margin-bottom: 10px;"> -->
+            <!-- <a id="b-addevent" class="btn btn-default"><i class="fa fa-plus"></i> Add Event</a> -->
+            <!--<a id="b-layers" class="btn btn-default"><i class="fa fa-list"></i> Layers</a>            
+            <a id="b-share" class="btn btn-default"><i class="fa fa-share"></i> Publish</a>-->
+        <!-- </div> -->       
+
+
+       
+           <a id="editInfo" href="#"><span id="userName" style="font-size: 14pt;"></span></a>&nbsp;&nbsp;&nbsp; <i class="fa fa-calendar"></i> <span id="monthsAlive" style="font-size: 14pt;"></span>
+           </div>
+           <div class="btn-group pull-right" style="margin-right: 20px">
+                 <a id="b-share" class="btn btn-default"><i class="fa fa-share"></i> Share</a>
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+            <i class="fa fa-eye"></i> View<span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a id="mnuLayer" href="#">Layers</a></li>
+            <li class="divider"></li>
+            <li><a id="columnView" href="#">Column View</a></li>
+            <li><a id="blockView" href="#">Block View</a></li>
+          </ul>
+        </div>
+           <Br /><br />
+
+        <canvas class="kilocanvas" id="months" width="241" height="421">
+        </canvas><br />
+        Click on months to add and edit events.
+        <div id="month-highlight" class="month-highlight"></div>
+ 
+   </div>
+    
+    <!-- Welcome modal -->
+    <div class="modal fade" id="welcomeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="myModalLabel">Create New Kilomonth</h4>
+          </div>
+          <div class="modal-body">
+            <form role="form">
+              <div class="form-group">
+                <label for="welcome-name">Name</label>
+                <input type="text" class="form-control ignore-enter" id="welcome-name" name="welcome-name" placeholder="" />
+                <!-- <input type="text" id="dummy" name="dummy" style="visibility: hidden;" /> -->
+              </div>
+              <div class="form-group">
+                <label for="welcome-month">Birth Month</label>
+                 <select class="form-control" name="welcome-month" id="welcome-month">
+                    <option value="1">January</option>
+                    <option value="2">February</option>
+                    <option value="3">March</option>
+                    <option value="4">April</option>
+                    <option value="5">May</option>
+                    <option value="6">June</option>
+                    <option value="7">July</option>
+                    <option value="8">August</option>
+                    <option value="9">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                </select>
+               </div>
+               <div class="form-group">
+                   <label for="year">Birth Year</label>
+                   <select class="form-control" name="welcome-year" id="welcome-year"></select>
+               </div>
+                <div class="form-group">
+                    <label for="welcome-color">Color</label>
+                    <!-- <input type="color" value="ffc800" name="add-color" id="add-color" class="form-control">  -->
+                    <input id="welcome-color"  type="text" value="333399" class="form-control" />
+                </div>
+            </form>            
+          </div>
+          <div class="modal-footer">
+            <button id="welcome-close" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button id="welcome-delete" type="button" class="btn btn-danger" data-dismiss="modal" style="display: none;">Delete</button>
+            <button id="welcome-save" type="button" class="btn btn-primary" data-dismiss="modal">Create</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- instructional modal -->
+    <div class="modal fade" id="tipsModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Instructions</h4>
+                </div>
+                <div class="modal-body" style="text-align: left!important">
+                    The average US lifespan is around 80 years, or about 1000 months - a kilomonth.
+                     <P>Here is your Kilomonth.
+                    <P>Move your mouse over the months to see where they are in time.
+                    <P>Click a month to add:
+                    <ul>
+                        <li>Past</li>
+                        <ul>
+                            <li>Births</li>
+                            <li>Anniversaries</li>
+                            <li>Vacations</li>
+                        </ul>
+                        <li>Future</li>
+                        <ul>
+                            <li>Goals</li>
+                            <li>Birthdays</li>
+                            <li>Anniversaries</li>
+                        </ul>
+                    </ul>
+                   Share your Kilomonth using the Share button.  Have fun charting your life!
+                </div>
+                <div class="modal-footer">
+                    <button id="close" type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- sharing modal -->
+    <div class="modal fade" id="shareModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title"><i class="fa fa-share"></i> Share</h4>
+                </div>
+                <div class="modal-body">
+                    By default, your Kilomonth is only visible to you. 
+                    <hr>
+                            Share with specific Kilomonth members
+                    <p></p>
+                    <div id="usersSharedWith"></div>
+                    <p></p>
+                   <div class="input-group">
+                      <input type="text" id="txtAddShareUser" placeholder="Enter email address" class="form-control">
+                      <span class="input-group-btn">
+                        <button id = "btnAddShareUser"  class="btn btn-default" type="button"><i class="fa fa-plus"></i> Add</button>
+                      </span>
+                    </div>
+                    <hr>                
+                       <div class="checkbox"> 
+                        <label>
+                           <input  id="chkShareLink" type="checkbox">
+                            Share with people who are not Kilomonth members
+                        </label>
+                     </div>
+                     <div id="copypaste">
+                    Copy and paste this text anywhere you want to share your Kilomonth. <p></p>
+                    <textarea id="shareText" readonly class="form-control" width="40" height="5" disabled></textarea>
+                    </div>
+                    <hr>
+                     <div class="checkbox"> 
+                        <label>
+                           <input  id="chkSharePublic" type="checkbox">
+                            Share with the world and publish in the <a href="/gallery.html" target="_new">Kilomonth Gallery</a>
+                        </label>
+                     </div>
+                    <!-- <button id="shareCopy" type="button" class="btn btn-info"><i class="fa fa-copy"></i> Copy to Clipboard</button> -->
+            <div class="modal-footer">
+               <button id="close" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                 <button id="share-save" type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+            </div>                
+            </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- layer modal -->
+    <div class="modal fade" id="layersModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="layer-label">Layers</h4>
+                </div>
+                <div class="modal-body">
+               <button id="layerSelectAll" type="button" class="btn btn-default">Check All</button>
+                <button id="layerSelectNone" type="button" class="btn btn-default">Check None</button>
+                    <div class="form-group" id="layerVisibilitySelection" style="text-align: left!important;">
+                    </div>
+                </div>
+          <div class="modal-footer">
+            <button id="close" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button id="layer-save" type="button" class="btn btn-primary" data-dismiss="modal">Apply</button>
+          </div>
+ 
+            </div>
+        </div>
+    </div>
+    
+    
+    <!-- select modal -->
+    <div class="modal fade" id="selectModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="select-month-label">This Month's Events</h4><span class="wiki"></span><br>
+                    Click below to add or edit events
+                </div>
+                <div class="modal-body">
+
+                    <div id="eventSelector" class="btn-group-vertical">
+                      <button type="button" class="btn btn-default btn-event">Event 1</button>
+                      <button type="button" class="btn btn-default btn-event">Event 2</button>
+                    </div>
+                    <p></p>
+                    <a id="b-addevent-d" class="btn btn-default"><i class="fa fa-plus"></i> Add Event</a>
+
+                </div> 
+               <div class="modal-footer">
+            <button id="close" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <!-- Add modal -->
+    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="add-form-label2">Add or Edit Event</h4>
+          </div>
+          <div class="modal-body">
+            <form role="form">   
+            <div class="row">
+            <div class="col-xs-4">
+              <div class="form-group">
+                <label for="add-eventName">Event Name</label>
+                <textarea class="form-control" id="add-eventName" name="add-eventName" width=20 height=4></textarea>
+              </div>
+              <div class="row">
+               <div class="col-xs-6" id="add-color-col">
+                  <div class="form-group">
+                       <label for="add-color">Color</label>
+                       <!-- <input type="color" value="ffc800" name="add-color" id="add-color" class="form-control">  -->
+                       <input id="add-color" name="add-color" type="text" value="333399" class="form-control" />
+                  </div>
+                </div>
+                <div class="col-xs-6" id="add-on-top-col">
+                    <div class="form-group">
+                       <label for="add-frontmost">On Top</label>
+                       <input type="checkbox" name="add-frontmost" id="add-frontmost" class="form-control">    
+                    </div>
+                </div>
+               </div>
+              <div class="row">
+               <div class="col-xs-6">
+              <div class="form-group">
+                <label for="add-month">Start</label>
+                 <select class="form-control" name="add-month" id="add-month">
+                    <option value="1">January</option>
+                    <option value="2">February</option>
+                    <option value="3">March</option>
+                    <option value="4">April</option>
+                    <option value="5">May</option>
+                    <option value="6">June</option>
+                    <option value="7">July</option>
+                    <option value="8">August</option>
+                    <option value="9">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                </select>
+                <select class="form-control" name="add-year" id="add-year"></select>
+               </div>
+              </div>
+              <div class="col-xs-6">
+              <div class="form-group">
+                <label for="add-end-month">End</label>
+                 <select class="form-control" name="add-end-month" id="add-end-month">
+                    <option value="1">January</option>
+                    <option value="2">February</option>
+                    <option value="3">March</option>
+                    <option value="4">April</option>
+                    <option value="5">May</option>
+                    <option value="6">June</option>
+                    <option value="7">July</option>
+                    <option value="8">August</option>
+                    <option value="9">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                </select>
+                <select class="form-control" name="add-end-year" id="add-end-year"></select>
+               </div>
+
+               </div>
+               </div>
+                <div class="form-group">
+                <label for="selectLayer">Layer</label>
+                 <select class="form-control" id="selectLayer">
+
+                </select>
+               </div>
+               </div>
+          <div class="col-xs-8">
+          <div class="form-group">
+              <label for="descEdit">What happened?</label>
+             <div class="richEdit" id="descEdit"></div>
+           </div>
+             <div class="form-group">
+              <label for="files">Pictures</label>
+              <input type="file" accept=".jpg,.jpeg,.gif,.png" id="files" name="files[]" multiple />
+                <output id="list"></output>
+                <div id="existingImages"></div>
+              </div>
+
+          </div>
+          </div>
+
+          </form>            
+          </div>
+
+          <div class="modal-footer">
+              <span id="saveIndicator" style="display: none;">
+                  <i class="fa fa-spin fa-spinner"></i> Saving your pictures, please wait...
+              </span>
+              <span id="saveButtons">
+                <button id="close" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="add-delete" type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>
+                <button id="add-save" type="button" class="btn btn-primary">Save</button>
+                </span>
+          </div>
+        </div>
+      </div>
+    </div>
+<script>
+if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
+  var msViewportStyle = document.createElement('style')
+  msViewportStyle.appendChild(
+    document.createTextNode(
+      '@-ms-viewport{width:auto!important}'
+    )
+  )
+  document.querySelector('head').appendChild(msViewportStyle)
+}
+</script>
+</body>
+</html>
