@@ -40,7 +40,7 @@ var ViewEvents = {
         var clickDate = this.events.eventsDate;
         var events = this.events.events;
         var dateString = DateUtils.shortDateString(clickDate);
-        this.$wikiLink.html('<a target="_new" href="http://en.wikipedia.org/wiki/' + dateString.replace(" ", "_") + '">Wikipedia</a>');
+        $(".wiki").html('<a target="_new" href="http://en.wikipedia.org/wiki/' + dateString.replace(" ", "_") + '">Wikipedia</a>');
         this.$eventSelector.html("");
         this.$dialogLabel.text(dateString);
         if (events) {

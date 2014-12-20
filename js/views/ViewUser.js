@@ -41,12 +41,14 @@ var ViewUser = {
             $btnLoginModal.hide();
             $btnLogout.show();
             $btnSignupModal.hide();    
-            $("#userInfo").html('for <a href="#" id="lnkShowUserInfo">' + authenticatedUser.userInfo.name + '</a>');
+            //$("#userInfo").html('for <a href="#" id="lnkShowUserInfo">' + authenticatedUser.userInfo.name + '</a>');
+            $("#userInfo").html('for ' + authenticatedUser.userInfo.name);
             authenticatedUser.load(function () {
                 ViewUser.displayMaps(authenticatedUser.maps);
                 $storedMaps.show();
             });
             km.storageProvider.getMapsSharedWithUser(authenticatedUser.uid, function(mapId, mapInfo) {
+                $("#sharedMaps").show();
                 $("#sharedMaps").append('<a href="/kilomonth.html?mapid=' + mapId + '" class="btn btn-default btn-map"><i class="fa fa-square" style="color: ' + mapInfo.color + '"></i> ' + mapInfo.name + '</a>');
             });
         } else {

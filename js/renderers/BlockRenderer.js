@@ -7,8 +7,7 @@ var BlockRenderer = {
         var htRatio = availableWidth / availableHeight;
         if (htRatio < 1.15)
             mapSettings.yearColumns = 2;
-
-
+            
         var maxMonthHeight = Math.floor(availableHeight / (mapSettings.yearsShown / mapSettings.yearColumns));
         var maxMonthWidth = Math.floor(availableWidth / (mapSettings.yearColumns * 12));
         var monthSize = Math.max(Math.min(maxMonthHeight, maxMonthWidth), 9);

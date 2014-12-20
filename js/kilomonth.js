@@ -14,6 +14,8 @@ $(function() {
         ViewMap.bind();
         ViewEvents.init();
         ViewEvents.bind();
+        ViewEventsRO.init();
+        ViewEventsRO.bind();
         ViewEvent.init();
         ViewEvent.bind();
         ViewLayers.init();

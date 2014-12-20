@@ -105,13 +105,18 @@ var ViewMap = {
     },
     
     handleMouseUp : function(evt) {
-        if (!this.readOnly) {
-            var c = this.$canvas;
-            var mousePos = CanvasUtils.getMousePos(c, evt);
-            var clickDate = this.renderer.getDateFromClick(this.mapSettings, this.lifeMapData, mousePos);
-            var message = clickDate;
-            this.hideHighlight();
-            var events = this.lifeMapData.eventsOnDate(clickDate);
+        var c = this.$canvas;
+        var mousePos = CanvasUtils.getMousePos(c, evt);
+        var clickDate = this.renderer.getDateFromClick(this.mapSettings, this.lifeMapData, mousePos);
+        var message = clickDate;
+        this.hideHighlight();
+        var events = this.lifeMapData.eventsOnDate(clickDate);
+        if (this.readOnly) {
+            if (events) {
+                ViewEventsRO.setModel(this.lifeMapData, events);
+                ViewEventsRO.showDialog();
+            }
+        } else {
             if (events) {
                 ViewEvents.setModel(this.lifeMapData, events);
                 ViewEvents.showDialog();

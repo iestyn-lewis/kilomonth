@@ -31,7 +31,7 @@ var Events = {
                             thisEvt += "<br>" + evt.description;
                         if (evt.images) {
                             for(var j=0, image; image = evt.images[j]; j++) {
-                                thisEvt+= '<img src="' + image + '.jpg">';
+                                thisEvt+= '<br><img src="' + image + '.jpg" style="width: 100%">';
                             }
                         }
                         ret.push(thisEvt);

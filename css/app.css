@@ -56,6 +56,8 @@ h1 {
 
 #addModal .modal-dialog  {width:80%;}
 
+#details-modal .modal-dialog {width: 90%;}
+
 .thumb {
     height: 75px;
     border: 1px solid #000;

@@ -17,6 +17,14 @@
             ".read": "data.child('info').child('public').val() == true || data.child('info').child('uid').val() == auth.uid",
             ".write": "data.child('info').child('uid').val() == auth.uid && newData.child('info').child('uid').val() == auth.uid"
           }
+        },
+        "sharedmaps": {
+            ".read": "auth != null",
+            ".write": "auth != null"
+        },
+        "sharedusers": {
+            ".read": "auth != null",
+            ".write": "auth != null"            
         }
       }
     }
