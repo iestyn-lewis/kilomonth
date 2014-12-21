@@ -19,6 +19,10 @@ h1 {
     font-size: 16pt;
 }
 
+.spaced-div {
+    margin-bottom: 20px;
+}
+
 .month-highlight {
     border: solid 2px #ff0000;
     z-index: 99;
