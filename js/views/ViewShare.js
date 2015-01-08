@@ -34,12 +34,12 @@ var ViewShare = {
     
     showDialog : function() {
         var info = this.lifeMapData.info;
-        if (info.shortUrl) {
+        /*if (info.shortUrl) {
             var shortUrl = info.shortUrl;
             var text = "Check out my Kilomonth - a month by month look at my life - at " + shortUrl;
             $("#shareText").text(text);
             $("#shareModal").modal();
-        } else {
+        } else { */
             km.urlShortenerProvider.shortenURL(document.URL, function(ret) {
                 ViewShare.lifeMapData.info.shortUrl = ret.id;
                 ViewShare.lifeMapData.save();
@@ -47,7 +47,7 @@ var ViewShare = {
                 $("#shareText").text(text);
                 $("#shareModal").modal();                
             });
-        }
+       // }
         this.toCtls();
     },
     
