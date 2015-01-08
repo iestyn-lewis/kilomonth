@@ -79,6 +79,9 @@ var ViewMap = {
                 $("#help").show();
             }
             $("#userName").text(this.lifeMapData.info.name);
+            if (this.readOnly) {
+                $("#userName").unwrap();
+            }
             var today = new Date();
             $("#monthsAlive").text(DateDiff.inMonths(this.lifeMapData.data.birth, today));
             this.renderer.drawMap(this.mapSettings, this.lifeMapData, this.$canvas);

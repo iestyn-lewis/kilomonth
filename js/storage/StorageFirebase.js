@@ -14,6 +14,7 @@ var StorageFirebase = {
         fbUsersRef = new Firebase(rootURL + 'kilomonth/users');
         fbMapsRef = new Firebase(rootURL + 'kilomonth/maps'); 
         fbPublicMapsRef = new Firebase(rootURL + 'kilomonth/publicmaps'); 
+        fbLinkedMapsRef = new Firebase(rootURL + 'kilomonth/linkedmaps');
         fbSharedMapsRef = new Firebase(rootURL + 'kilomonth/sharedmaps');
         fbSharedUsersRef = new Firebase(rootURL + 'kilomonth/sharedusers');
     },
@@ -71,6 +72,11 @@ var StorageFirebase = {
                 fbPublicMapsRef.child(mapId).set(info);
             } else {
                 fbPublicMapsRef.child(mapId).remove();
+            }        
+            if (info.outShare) {
+                fbLinkedMapsRef.child(mapId).set(info);
+            } else {
+                fbLinkedMapsRef.child(mapId).remove();
             }        
         }
         ref = fbMapsRef.child(mapId);

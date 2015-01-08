@@ -23,7 +23,10 @@ var ViewShare = {
             if (outShare) {
                 $('#shareText').select();
             }
+            ViewShare.fromCtls();
         });
+        
+        $("#chkSharePublic").click(this.fromCtls.bind(this));
                 
         $("#btnAddShareUser").click(this.handleAddUserButton.bind(this));
         
