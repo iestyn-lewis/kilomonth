@@ -40,7 +40,7 @@ var ViewUser = {
         if (authenticatedUser) {
             $btnLoginModal.hide();
             $btnLogout.show();
-            $("#start").hide();
+            //$("#start").hide();
             $btnSignupModal.hide();    
             //$("#userInfo").html('for <a href="#" id="lnkShowUserInfo">' + authenticatedUser.userInfo.name + '</a>');
             $("#userInfo").html('for ' + authenticatedUser.userInfo.name);
@@ -53,6 +53,7 @@ var ViewUser = {
                 $("#sharedMaps").append('<a href="/kilomonth.html?mapid=' + mapId + '" class="btn btn-default btn-map"><i class="fa fa-square" style="color: ' + mapInfo.color + '"></i> ' + mapInfo.name + '</a>');
             });
         } else {
+            $("#start").show();
             $storedMaps.hide();
             $btnLogout.hide();
         }

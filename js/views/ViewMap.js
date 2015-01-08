@@ -76,6 +76,7 @@ var ViewMap = {
             }
             if (window.tempMap) {
                 $("#b-save").show();
+                $("#help").show();
             }
             $("#userName").text(this.lifeMapData.info.name);
             var today = new Date();

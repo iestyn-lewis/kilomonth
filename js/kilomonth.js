@@ -60,7 +60,7 @@ $(function() {
         ViewShare.setModel(map);
         ViewMap.setModels(map, MapSettings.defaultSettings());
         ViewMap.toCtls();
-        ViewMap.showStartScreen();
+        //ViewMap.showStartScreen();
     });
     
     window.onbeforeunload = function(e) {
