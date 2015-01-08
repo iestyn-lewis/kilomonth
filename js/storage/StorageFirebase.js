@@ -64,15 +64,18 @@ var StorageFirebase = {
     saveMap : function(mapId, info, data) {
         var uid = info.uid;
         var map = {info: info, data: JSON.stringify(data)};
-        var ref = fbUsersRef.child(uid).child("maps").child(mapId);
-        ref.set(info);
+        if (uid != "_temp") {
+            var ref = fbUsersRef.child(uid).child("maps").child(mapId);
+            ref.set(info);
+            if (info.public) {
+                fbPublicMapsRef.child(mapId).set(info);
+            } else {
+                fbPublicMapsRef.child(mapId).remove();
+            }        
+        }
         ref = fbMapsRef.child(mapId);
         ref.set(map);
-        if (info.public) {
-            fbPublicMapsRef.child(mapId).set(info);
-        } else {
-            fbPublicMapsRef.child(mapId).remove();
-        }
+
     },
     
     removeMap : function(mapId, uid, callback) {
@@ -99,11 +102,13 @@ var StorageFirebase = {
         var mapRef = fbMapsRef.push({info: mapInfo, data: jdata});
         var newMapId = mapRef.key();
         // set reference in user object
-        var userMapRef = fbUsersRef.child(mapInfo.uid).child("maps").child(newMapId);
-        userMapRef.set(mapInfo);
-        // if it is public, set a reference in the public object
-        if (mapInfo.public) {
-            fbPublicMapsRef.child(newMapId).set(mapInfo);
+        if (mapInfo.uid != "_temp") {
+            var userMapRef = fbUsersRef.child(mapInfo.uid).child("maps").child(newMapId);
+            userMapRef.set(mapInfo);
+            // if it is public, set a reference in the public object
+            if (mapInfo.public) {
+                fbPublicMapsRef.child(newMapId).set(mapInfo);
+            }
         }
         return newMapId;
     },

@@ -35,6 +35,9 @@ var ViewMap = {
         this.lifeMapData = lifeMapData;
         this.mapSettings = mapSettings;
         this.readOnly = true;
+        if (lifeMapData.info.uid == "_temp") {
+            this.readOnly = false;
+        }
         if (km.authenticatedUser)  {
             if (lifeMapData.info.uid == km.authenticatedUser.uid) {
                 this.readOnly = false;
@@ -67,8 +70,12 @@ var ViewMap = {
     
     toCtls : function() {
         if (this.lifeMapData) {
-            if (this.readOnly) {
+            if (this.readOnly || window.tempMap) {
                 $("#b-share").hide();
+                $("#help").hide();
+            }
+            if (window.tempMap) {
+                $("#b-save").show();
             }
             $("#userName").text(this.lifeMapData.info.name);
             var today = new Date();
@@ -163,11 +170,11 @@ var ViewMap = {
         this.$monthHighlight.qtip('option', 'content.text', message === "" ? " " : message); 
         this.$monthHighlight.qtip('show');
         // resize images
-        $('img').each(function(i, item) {
-            $(item).css({
-                'width': '100%'
-            });
-        }); 
+        //$('img').each(function(i, item) {
+        //    $(item).css({
+       //         'width': '100%'
+         //   });
+        //}); 
         this.$monthHighlight.qtip('reposition');
     }
 };

@@ -91,13 +91,20 @@ var BlockRenderer = {
                 }
                 // birth
                 if (month == lifeMapData.birthoffset && year == 0) {
-                    ctx.fillStyle = "#ffffff";
+                     ctx.fillStyle = "#ffffff";//mapSettings.thisMonthColor;
                     ctx.fillRect(pad + month * size + month * pad + 3, pad + year * size + year * pad + 3, size-6, size-6);
                 }
                 // this month
                 if (elapsed == thisMonth) {
-                    ctx.fillStyle = mapSettings.thisMonthColor;
-                    ctx.fillRect(pad + month * size + month * pad + 3, pad + year * size + year * pad + 3, size-6, size-6);
+                    ctx.fillStyle = "#ffffff";//mapSettings.thisMonthColor;
+                    ctx.beginPath();
+                    var x = pad + month * size + month * pad + 3;
+                    var y = pad + year * size + year * pad + 3;
+                    ctx.moveTo(x, y);
+                    ctx.lineTo(x + size-6,y + ((size-6)/2));
+                    ctx.lineTo(x,y + size-6);
+                    ctx.fill();
+                    //ctx.fillRect(pad + month * size + month * pad + 3, pad + year * size + year * pad + 3, size-6, size-6);
                 }
             }
         }

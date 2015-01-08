@@ -40,6 +40,7 @@ var ViewUser = {
         if (authenticatedUser) {
             $btnLoginModal.hide();
             $btnLogout.show();
+            $("#start").hide();
             $btnSignupModal.hide();    
             //$("#userInfo").html('for <a href="#" id="lnkShowUserInfo">' + authenticatedUser.userInfo.name + '</a>');
             $("#userInfo").html('for ' + authenticatedUser.userInfo.name);

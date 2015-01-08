@@ -85,6 +85,7 @@
            </div>
            <div class="btn-group pull-right" style="margin-right: 20px">
                  <a id="b-share" class="btn btn-default"><i class="fa fa-share"></i> Share</a>
+                  <a id="b-save" class="btn btn-default" style="display: none;"><i class="fa fa-save"></i> Save</a>
           <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
             <i class="fa fa-eye"></i> View<span class="caret"></span>
           </button>
@@ -99,10 +100,44 @@
 
         <canvas class="kilocanvas" id="months" width="241" height="421">
         </canvas><br />
-        Click on months to add and edit events.
+       <span id="help"><img src="img/kilomonth.png" width="30px"> Click months to add events and pictures.</span>
         <div id="month-highlight" class="month-highlight"></div>
  
    </div>
+   
+         <!-- signup modal -->
+    <div class="modal fade" id="signUpModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="select-month-label">Sign Up</h4>
+                    We will never send you unwanted email, nor will we ever share any of your 
+                    information with anyone.
+                </div>
+                <div class="modal-body">
+                  <div class="form-group">
+                    <label for="email-su">Your Name</label>
+                    <input type="text" class="form-control ignore-enter" id="name-su"  placeholder="" />
+                    <!-- <input type="text" id="dummy" name="dummy" style="visibility: hidden;" /> -->
+                  </div>
+                  <div class="form-group">
+                    <label for="email-su">Email</label>
+                    <input type="text" class="form-control ignore-enter" id="email-su"  placeholder="" />
+                  </div>
+                  <div class="form-group">
+                    <label for="password-su">Password</label>
+                    <input type="password" class="form-control ignore-enter" id="password-su" placeholder="" />
+                  </div>
+                </div>
+          <div class="modal-footer">
+            <button id="publish-close" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button id="btn-signup" type="button" class="btn btn-primary" data-dismiss="modal">Sign Up</button>
+          </div>
+ 
+            </div>
+        </div>
+    </div>
     
     <!-- Welcome modal -->
     <div class="modal fade" id="welcomeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

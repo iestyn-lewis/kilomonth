@@ -32,9 +32,43 @@
 </head>
 <body>
     <div id="splash">
-        <h1>KILOMONTH</h1>
-        <div id="userInfo">Your life.  All of it.<p><a href="about.html">What is Kilomonth?</a></div>
-    </div>
+        <h1><img src="img/kilomonth.png" width="50px"> KILOMONTH</h1>
+        <div id="userInfo">Your life.  All of it.<p></div>
+
+    <div id="start">
+        <br>
+        <form role="form">
+ 
+                Name&nbsp;
+                <input type="text" class="ignore-enter" id="start-name" placeholder="" />
+                <!-- <input type="text" id="dummy" name="dummy" style="visibility: hidden;" /> -->
+                &nbsp;&nbsp;&nbsp;
+               Born &nbsp;
+                 <select class=""  id="start-month">
+                    <option value="1">January</option>
+                    <option value="2">February</option>
+                    <option value="3">March</option>
+                    <option value="4">April</option>
+                    <option value="5">May</option>
+                    <option value="6">June</option>
+                    <option value="7">July</option>
+                    <option value="8">August</option>
+                    <option value="9">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                </select>
+  
+                   <select class="" id="start-year"></select>
+           &nbsp;&nbsp;&nbsp;
+                   
+            <!-- <a id="btnSignUp" type="button" class="btn btn-default btn-start"><i class="fa fa-share"></i> Get Started</a> -->
+            <a id="btnGetStarted" type="button" class="btn btn-info btn-small btn-start"><i class="fa fa-share"></i> Get Started</a>
+
+            </form>  <br>
+          </div>
+</div>
+
     <p></p>
 
     
@@ -48,13 +82,14 @@
 Shared With Me
         </div>
 <p>
-        <div class="spaced-div btn-group-vertical" id="buttons">
+        <div class="spaced-div btn-group btn-small" id="buttons">
             <a href="gallery.html" type="button" class="btn btn-default btn-gallery"><i class="fa fa-image"></i> Gallery</a>
-            <a id="btnSignUp" type="button" class="btn btn-default btn-start"><i class="fa fa-share"></i> Get Started</a>
+             <!-- <a id="btnSignUp" type="button" class="btn btn-default btn-start"><i class="fa fa-share"></i> Sign Up</a> -->
             <a id="btnLogin" class="btn btn-default"><i class="fa fa-user"></i> Log In</a>
             <a id="btnLogout" class="btn btn-default"><i class="fa fa-user"></i> Log Out</a>
         </div>
-  
+        <br>
+  <a href="/about.html"><span style="font-size: 10px">About</span></a>
 
     
         <!-- login modal -->
@@ -63,7 +98,7 @@ Shared With Me
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title" id="select-month-label">Login</h4>
+                    <h4 class="modal-title" id="select-month-label">Log In</h4>
                 </div>
                 <div class="modal-body">
                   <div class="form-group">
@@ -86,37 +121,7 @@ Shared With Me
         </div>
     </div>
     
-         <!-- signup modal -->
-    <div class="modal fade" id="signUpModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title" id="select-month-label">Get Started</h4>
-                </div>
-                <div class="modal-body">
-                  <div class="form-group">
-                    <label for="email-su">Your Name</label>
-                    <input type="text" class="form-control ignore-enter" id="name-su"  placeholder="" />
-                    <!-- <input type="text" id="dummy" name="dummy" style="visibility: hidden;" /> -->
-                  </div>
-                  <div class="form-group">
-                    <label for="email-su">Email</label>
-                    <input type="text" class="form-control ignore-enter" id="email-su"  placeholder="" />
-                  </div>
-                  <div class="form-group">
-                    <label for="password-su">Password</label>
-                    <input type="password" class="form-control ignore-enter" id="password-su" placeholder="" />
-                  </div>
-                </div>
-          <div class="modal-footer">
-            <button id="publish-close" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button id="btn-signup" type="button" class="btn btn-primary" data-dismiss="modal">Sign Up</button>
-          </div>
- 
-            </div>
-        </div>
-    </div>
+
     
     <!-- user info model -->
     
