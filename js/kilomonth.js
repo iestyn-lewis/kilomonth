@@ -81,6 +81,8 @@ $(function() {
         var email = $("#email-su").val();
         var password = $("#password-su").val();
         var name = $("#name-su").val();
+        $("#saveButtons-su").hide();
+        $("#saveIndicator-su").show();
         User.createNewUser(email, password, name, function(user) {
             if (user) {
                 authenticatedUser = user;
@@ -88,6 +90,10 @@ $(function() {
                 window.tempMap = false;
                 ViewMap.lifeMapData.save();
                 window.location.href = "/kilomonth.html?mapid=" + ViewMap.lifeMapData.mapId;
+            } else {
+                $("#saveIndicator-su").hide();
+                $("#saveButtons-su").show();
+                //$("#signUpModal").modal('hide');                
             }
         });
     });

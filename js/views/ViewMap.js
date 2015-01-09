@@ -107,6 +107,10 @@ var ViewMap = {
             var events = lmd.eventsOnDate(clickDate);
             if (events) {
                 message += events.summary();
+            } else {
+                if (!this.readOnly) {
+                    message = '<span style= "font-size: 10px;">(click to add an event)</span>';
+                }
             }
             this.highlightMonth(clickDate);
             this.displayTooltip(title, message);
